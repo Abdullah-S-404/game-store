@@ -13,6 +13,7 @@ const CartPage = () => {
     const { cart, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
     const { placeOrder } = useAuth();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [orderSuccess, setOrderSuccess] = useState(false);
 
     const handleCheckout = async () => {
         if (cart.length === 0 || isSubmitting) return;
@@ -25,6 +26,7 @@ const CartPage = () => {
         const success = await placeOrder(cart, cartTotal);
         if (success) {
             clearCart();
+            setOrderSuccess(true);
         }
         setIsSubmitting(false);
     };
@@ -38,11 +40,24 @@ const CartPage = () => {
             <div className="pb-24 px-6 max-w-[1600px] mx-auto">
                 <h1 className="text-white text-5xl font-gaming uppercase tracking-wider mb-12">Your Cart</h1>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Cart Items */}
-                    <div className="lg:col-span-2">
-                        {cart.length > 0 ? (
-                            cart.map((item) => (
+                {orderSuccess ? (
+                    <div className="bg-surface border border-green-500/30 rounded-2xl py-24 px-6 text-center flex flex-col items-center justify-center">
+                        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6 border border-green-500/50">
+                            <span className="text-4xl">🎉</span>
+                        </div>
+                        <h3 className="text-white text-4xl font-gaming uppercase tracking-wider mb-4">Order Successful!</h3>
+                        <p className="text-gray-400 text-lg mb-8 max-w-lg">
+                            Thank you for your purchase. Your order has been placed successfully and your games are ready to be downloaded.
+                        </p>
+                        <Link href="/games" className="btn-primary-glow py-4 px-12 rounded-xl text-sm inline-flex items-center gap-2 font-gaming uppercase tracking-widest justify-center">
+                            Browse More Games
+                        </Link>
+                    </div>
+                ) : cart.length > 0 ? (
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                        {/* Cart Items */}
+                        <div className="lg:col-span-2">
+                            {cart.map((item) => (
                                 <div key={item.gameId} className="bg-surface border border-white/10 rounded-xl p-4 flex justify-between items-center mb-4 group hover:border-primary/50 transition-all z-10 relative hover:-translate-y-2 duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
                                     <div className='flex gap-4'>
                                         <div className="relative w-24 h-32 rounded-lg overflow-hidden shrink-0">
@@ -84,59 +99,59 @@ const CartPage = () => {
                                         <Trash2 className="w-10 h-5 text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-50 cursor-pointer" onClick={() => removeFromCart(item.gameId)} />
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="bg-surface border border-dashed border-white/10 rounded-2xl py-24 text-center flex flex-col items-center justify-center">
-                                <ShoppingCart className="w-16 h-16 text-gray-700 mx-auto mb-6" />
-                                <h3 className="text-white text-2xl font-bold mb-4">Your cart is empty</h3>
-                                <Link href="/games" className="btn-primary-glow py-4 px-12 rounded-xl text-sm inline-flex items-center gap-2 font-gaming uppercase tracking-widest max-w-[300] justify-center mb-4">
-                                    Browse Games
-                                </Link>
-                            </div>
-                        )}
-                    </div>
+                            ))}
+                        </div>
 
-                    {/* Summary Sidebar */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-surface border border-white/10 rounded-2xl p-8 sticky top-32">
-                            <h2 className="text-white text-2xl font-black uppercase tracking-tighter mb-8 border-b border-white/5 pb-4">Order Summary</h2>
+                        {/* Summary Sidebar */}
+                        <div className="lg:col-span-1">
+                            <div className="bg-surface border border-white/10 rounded-2xl p-8 sticky top-32">
+                                <h2 className="text-white text-2xl font-black uppercase tracking-tighter mb-8 border-b border-white/5 pb-4">Order Summary</h2>
 
-                            <div className="space-y-4 mb-8">
-                                <div className="flex justify-between items-center text-gray-400">
-                                    <span>Subtotal</span>
-                                    <span className="text-white font-extrabold">${cartTotal.toFixed(2)}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-gray-400">
-                                    <span>Taxes (0%)</span>
-                                    <span className="text-white font-extrabold">$0.00</span>
-                                </div>
-                                <div className="flex justify-between items-center pt-4 border-t border-white/10 text-xl font-black text-white uppercase tracking-tighter">
-                                    <span>Total</span>
-                                    <span className="text-primary tracking-normal font-extrabold">${cartTotal.toFixed(2)}</span>
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={handleCheckout}
-                                disabled={cart.length === 0 || isSubmitting}
-                                className="btn-primary-glow py-4 px-12 rounded-xl flex items-center w-full justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {isSubmitting ? (
-                                    <div className="flex items-center gap-3">
-                                        <Loader2 className="w-5 h-5 animate-spin text-black" />
-                                        <span className="font-gaming uppercase tracking-widest text-sm text-black">Processing...</span>
+                                <div className="space-y-4 mb-8">
+                                    <div className="flex justify-between items-center text-gray-400">
+                                        <span>Subtotal</span>
+                                        <span className="text-white font-extrabold">${cartTotal.toFixed(2)}</span>
                                     </div>
-                                ) : (
-                                    <span className="font-gaming uppercase tracking-widest text-sm text-black">CHECKOUT NOW</span>
-                                )}
-                            </button>
+                                    <div className="flex justify-between items-center text-gray-400">
+                                        <span>Taxes (0%)</span>
+                                        <span className="text-white font-extrabold">$0.00</span>
+                                    </div>
+                                    <div className="flex justify-between items-center pt-4 border-t border-white/10 text-xl font-black text-white uppercase tracking-tighter">
+                                        <span>Total</span>
+                                        <span className="text-primary tracking-normal font-extrabold">${cartTotal.toFixed(2)}</span>
+                                    </div>
+                                </div>
 
-                            <p className="text-[10px] text-gray-500 text-center uppercase font-bold tracking-widest">
-                                Safe and secure digital delivery guaranteed.
-                            </p>
+                                <button
+                                    onClick={handleCheckout}
+                                    disabled={cart.length === 0 || isSubmitting}
+                                    className="btn-primary-glow py-4 px-12 rounded-xl flex items-center w-full justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? (
+                                        <div className="flex items-center gap-3">
+                                            <Loader2 className="w-5 h-5 animate-spin text-black" />
+                                            <span className="font-gaming uppercase tracking-widest text-sm text-black">Processing...</span>
+                                        </div>
+                                    ) : (
+                                        <span className="font-gaming uppercase tracking-widest text-sm text-black">CHECKOUT NOW</span>
+                                    )}
+                                </button>
+
+                                <p className="text-[10px] text-gray-500 text-center uppercase font-bold tracking-widest">
+                                    Safe and secure digital delivery guaranteed.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="bg-surface border border-dashed border-white/10 rounded-2xl py-24 text-center flex flex-col items-center justify-center">
+                        <ShoppingCart className="w-16 h-16 text-gray-700 mx-auto mb-6" />
+                        <h3 className="text-white text-2xl font-bold mb-4">Your cart is empty</h3>
+                        <Link href="/games" className="btn-primary-glow py-4 px-12 rounded-xl text-sm inline-flex items-center gap-2 font-gaming uppercase tracking-widest max-w-[300] justify-center mb-4">
+                            Browse Games
+                        </Link>
+                    </div>
+                )}
             </div>
 
 
