@@ -99,4 +99,4 @@ game-store/
 
 ## 📄 License
 
-MIT © 2025 GameStore
+MIT © 2026 GameStore
