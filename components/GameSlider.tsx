@@ -177,6 +177,18 @@ const GameSlider: React.FC = () => {
 
   return (
     <div className="slider-wrapper overflow-hidden relative w-full h-screen">
+      <div className="absolute inset-0 opacity-0 pointer-events-none z-[-1]">
+        {games.map((g) => (
+          <Image
+            key={`preload-${g.id}`}
+            src={g.image}
+            alt="preload"
+            fill
+            sizes="100vw"
+            priority
+          />
+        ))}
+      </div>
 
       <div className="slide-bg absolute inset-0">
         <Image
@@ -185,7 +197,6 @@ const GameSlider: React.FC = () => {
           fill
           className="slide-image object-cover"
           priority
-          unoptimized={true}
           sizes="100vw"
         />
         <div className="slide-overlay absolute inset-0" />
@@ -210,7 +221,6 @@ const GameSlider: React.FC = () => {
               transition: `transform ${TRANSITION_MS}ms ${EXPO_EASING}`,
             }}
             priority
-            unoptimized={true}
             sizes="100vw"
           />
           <div
