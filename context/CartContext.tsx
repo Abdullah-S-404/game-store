@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { CartItem, Game } from '../types';
+import { useAuth } from './AuthContext';
 
 interface CartContextType {
     cart: CartItem[];
@@ -16,24 +17,32 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+    const { user } = useAuth();
     const [cart, setCart] = useState<CartItem[]>([]);
 
-    // Load cart from localStorage
+    // 1. Load cart from localStorage when user identity changes
     useEffect(() => {
-        const savedCart = localStorage.getItem('game_store_cart');
+        // Different keys for different users, or 'guest' for non-logged-in
+        const storageKey = user ? `game_store_cart_${user.id}` : 'game_store_cart_guest';
+
+        const savedCart = localStorage.getItem(storageKey);
         if (savedCart) {
             try {
                 setCart(JSON.parse(savedCart));
             } catch (e) {
                 console.error('Failed to parse cart', e);
+                setCart([]);
             }
+        } else {
+            setCart([]); // Clear state if no saved cart for this user
         }
-    }, []);
+    }, [user?.id]);
 
-    // Save cart to localStorage
+    // 2. Save cart to localStorage whenever it changes
     useEffect(() => {
-        localStorage.setItem('game_store_cart', JSON.stringify(cart));
-    }, [cart]);
+        const storageKey = user ? `game_store_cart_${user.id}` : 'game_store_cart_guest';
+        localStorage.setItem(storageKey, JSON.stringify(cart));
+    }, [cart, user?.id]);
 
     const addToCart = (game: Game) => {
         setCart((prevCart) => {

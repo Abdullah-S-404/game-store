@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (searchQuery.trim()) {
-                const filtered = games.filter(game => 
+                const filtered = games.filter(game =>
                     game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     game.genre.toLowerCase().includes(searchQuery.toLowerCase())
                 );
@@ -82,45 +82,60 @@ const Navbar: React.FC = () => {
 
                     {/* Desktop Links */}
                     <div className="hidden gap-2 md:flex items-center space-x-6">
-                        <Link href="/" className="nav-link-global font-gaming text-xs! tracking-[0.2em] ">Home</Link>
-                        <Link href="/games" className="nav-link-global font-gaming text-xs! tracking-[0.2em] ">Store</Link>
-                        <Link href="/about" className="nav-link-global font-gaming text-xs! tracking-[0.2em] ">About</Link>
-                        <Link href="/contact" className="nav-link-global font-gaming text-xs! tracking-[0.2em] ">Contact</Link>
+                        <Link href="/" className="font-gaming text-xs! tracking-[0.2em] nav-item-animate nav-anim-1">
+                            <span className="nav-item-glitch">Home</span>
+                        </Link>
+                        <Link href="/games" className="font-gaming text-xs! tracking-[0.2em] nav-item-animate nav-anim-2">
+                            <span className="nav-item-glitch">Store</span>
+                        </Link>
+                        <Link href="/about" className="font-gaming text-xs! tracking-[0.2em] nav-item-animate nav-anim-3">
+                            <span className="nav-item-glitch">About</span>
+                        </Link>
+                        <Link href="/contact" className="font-gaming text-xs! tracking-[0.2em] nav-item-animate nav-anim-4">
+                            <span className="nav-item-glitch">Contact</span>
+                        </Link>
                     </div>
 
                     {/* Search & Actions */}
                     <div className="flex  gap-6 items-center">
                         <div className="hidden md:flex gap-2 items-center">
-                            <button 
-                                onClick={toggleSearch} 
+                            <button
+                                onClick={toggleSearch}
                                 className="text-white/70 hover:text-primary transition-all hover:scale-110 cursor-pointer"
                                 aria-label="Search"
                             >
-                                <Search strokeWidth={2.5} className='h-5'/>
+                                <Search strokeWidth={2.5} className='h-5' />
                             </button>
                             <Link href="/cart" className="relative text-white/70 hover:text-primary transition-all hover:scale-110 cursor-pointer">
-                                <ShoppingCart size={25} strokeWidth={2.5} className='h-5'/>
+                                <ShoppingCart size={25} strokeWidth={2.5} className='h-5' />
                                 {cartCount > 0 && (
                                     <span className="absolute -top-2 -right-2 bg-primary text-black text-[9px] font-black px-1 rounded-full min-w-[16px] h-4 flex items-center justify-center animate-pulse">
-                                    {cartCount}
-                                </span>
+                                        {cartCount}
+                                    </span>
                                 )}
                             </Link>
                         </div>
 
                         {/* Auth / User */}
                         {isAuthenticated ? (
-                            <div className="flex items-center">
-                                <Link href="/profile" className="flex items-center">
-                                    <div className="w-9 h-9 rounded-xl glass-effect border border-primary/30 flex items-center justify-center overflow-hidden hover:border-primary transition-colors">
+                            <div className="flex gap-4 items-center">
+                                <Link href="/profile" className="flex items-center justify-center">
+                                    <div className="w-9 h-9 rounded-xl glass-effect flex items-center justify-center overflow-hidden hover:scale-110 transition-all duration-300 hover:border-primary transition-colors">
                                         {user?.avatar ? (
-                                            <Image src={user.avatar} alt={user.name} width={36} height={36} className="w-full h-full object-cover" />
+                                            <Image
+                                                src={user.avatar}
+                                                alt={user.name}
+                                                width={36}
+                                                height={36}
+                                                className="w-full h-full object-cover"
+                                                unoptimized={true}
+                                            />
                                         ) : (
                                             <span className="text-sm font-gaming text-primary">{user?.name[0]}</span>
                                         )}
                                     </div>
                                 </Link>
-                                <button onClick={logout} className="text-[10px] uppercase font-bold tracking-widest text-gray-400 hover:text-error transition-colors">
+                                <button onClick={logout} className="btn-logout-glow py-2! px-6! text-[11px]! rounded-xl!">
                                     Logout
                                 </button>
                             </div>
@@ -130,29 +145,29 @@ const Navbar: React.FC = () => {
                             </Link>
                         )}
 
-                        <Menu size={40} className='glass-effect md:hidden text-white/70 ml-2 p-2 rounded-xl hover:text-primary transition-all hover:scale-110' onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}/>
+                        <Menu size={40} className='glass-effect md:hidden text-white/70 ml-2 p-2 rounded-xl hover:text-primary transition-all hover:scale-110' onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
                     </div>
                 </div>
 
                 <div className={`absolute top-full left-0 right-0 bg-surface backdrop-blur-3xl border-b border-white/5 md:hidden flex flex-col p-8 space-y-6 transition-all duration-300 origin-top ${isMobileMenuOpen ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0 pointer-events-none'
                     }`}>
-                     <div className="flex gap-6 items-center justify-end">
-                            <button 
-                                onClick={toggleSearch} 
-                                className="text-white/70 hover:text-primary transition-all hover:scale-110 cursor-pointer"
-                                aria-label="Search"
-                            >
-                                <Search strokeWidth={2.5} className='h-5'/>
-                            </button>
-                            <Link href="/cart" className="relative text-white/70 hover:text-primary transition-all hover:scale-110 cursor-pointer">
-                                <ShoppingCart size={25} strokeWidth={2.5} className='h-5'/>
-                                {cartCount > 0 && (
-                                    <span className="absolute -top-2 -right-2 bg-primary text-black text-[9px] font-black px-1 rounded-full min-w-[16px] h-4 flex items-center justify-center animate-pulse">
+                    <div className="flex gap-6 items-center justify-end">
+                        <button
+                            onClick={toggleSearch}
+                            className="text-white/70 hover:text-primary transition-all hover:scale-110 cursor-pointer"
+                            aria-label="Search"
+                        >
+                            <Search strokeWidth={2.5} className='h-5' />
+                        </button>
+                        <Link href="/cart" className="relative text-white/70 hover:text-primary transition-all hover:scale-110 cursor-pointer">
+                            <ShoppingCart size={25} strokeWidth={2.5} className='h-5' />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-primary text-black text-[9px] font-black px-1 rounded-full min-w-[16px] h-4 flex items-center justify-center animate-pulse">
                                     {cartCount}
                                 </span>
-                                )}
-                            </Link>
-                        </div>
+                            )}
+                        </Link>
+                    </div>
                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="nav-link-global font-gaming text-sm tracking-[0.2em]">Home</Link>
                     <Link href="/games" onClick={() => setIsMobileMenuOpen(false)} className="nav-link-global font-gaming text-sm tracking-[0.2em]">Store</Link>
                     <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="nav-link-global font-gaming text-sm tracking-[0.2em]">About</Link>
@@ -179,11 +194,11 @@ const Navbar: React.FC = () => {
                                     type="submit"
                                     className="absolute right-2 top-1/2 -translate-y-1/2 p-3 bg-primary text-black rounded-xl hover:bg-primary/80 transition-all duration-300 hover:scale-105"
                                 >
-                                    <Search strokeWidth={2.5} className='w-5 h-5'/>
+                                    <Search strokeWidth={2.5} className='w-5 h-5' />
                                 </button>
                             </div>
                         </form>
-                        
+
                         {/* Search Results */}
                         {showResults && filteredGames.length > 0 && (
                             <div className="absolute top-full left-0 right-0 mt-2 glass-effect border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl">

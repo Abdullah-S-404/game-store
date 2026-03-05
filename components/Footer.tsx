@@ -90,9 +90,9 @@ const Footer: React.FC = () => {
                         Legal
                     </h4>
                     <ul className="space-y-4 text-sm font-medium">
-                        <li><Link href="/terms" className="hover:text-gaming-pink transition-all flex items-center group"><span className="w-0 group-hover:w-4 h-px bg-gaming-pink mr-0 group-hover:mr-2 transition-all"></span>Terms of Service</Link></li>
-                        <li><Link href="/privacy" className="hover:text-gaming-pink transition-all flex items-center group"><span className="w-0 group-hover:w-4 h-px bg-gaming-pink mr-0 group-hover:mr-2 transition-all"></span>Privacy Policy</Link></li>
-                        <li><Link href="/cookies" className="hover:text-gaming-pink transition-all flex items-center group"><span className="w-0 group-hover:w-4 h-px bg-gaming-pink mr-0 group-hover:mr-2 transition-all"></span>Cookie Policy</Link></li>
+                        <li><span className="hover:text-gaming-pink transition-all flex items-center group"><span className="w-0 group-hover:w-4 h-px bg-gaming-pink mr-0 group-hover:mr-2 transition-all"></span>Terms of Service</span></li>
+                        <li><span className="hover:text-gaming-pink transition-all flex items-center group"><span className="w-0 group-hover:w-4 h-px bg-gaming-pink mr-0 group-hover:mr-2 transition-all"></span>Privacy Policy</span></li>
+                        <li><span className="hover:text-gaming-pink transition-all flex items-center group"><span className="w-0 group-hover:w-4 h-px bg-gaming-pink mr-0 group-hover:mr-2 transition-all"></span>Cookie Policy</span></li>
                     </ul>
                 </div>
             </div>

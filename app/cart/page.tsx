@@ -6,20 +6,27 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useCart } from '@/context/CartContext';
-import { Trash2, ShoppingCart } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { Trash2, ShoppingCart, Loader2 } from 'lucide-react';
 
 const CartPage = () => {
     const { cart, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
-    const [showToast, setShowToast] = useState(false);
+    const { placeOrder } = useAuth();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleCheckout = () => {
-        if (cart.length === 0) return;
-        // Mock checkout
-        setShowToast(true);
-        setTimeout(() => {
-            setShowToast(false);
+    const handleCheckout = async () => {
+        if (cart.length === 0 || isSubmitting) return;
+
+        setIsSubmitting(true);
+
+        // Simulate processing time for better UX
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        const success = await placeOrder(cart, cartTotal);
+        if (success) {
             clearCart();
-        }, 5000);
+        }
+        setIsSubmitting(false);
     };
 
     return (
@@ -74,13 +81,13 @@ const CartPage = () => {
                                         <p className="text-white font-black text-2xl uppercase tracking-tighter">
                                             ${(item.price * item.quantity).toFixed(2)}
                                         </p>
-                                        <Trash2 className="w-10 h-5 text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-50 cursor-pointer" onClick={() => removeFromCart(item.gameId)}/>
+                                        <Trash2 className="w-10 h-5 text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-50 cursor-pointer" onClick={() => removeFromCart(item.gameId)} />
                                     </div>
                                 </div>
                             ))
                         ) : (
                             <div className="bg-surface border border-dashed border-white/10 rounded-2xl py-24 text-center flex flex-col items-center justify-center">
-                                <ShoppingCart className="w-16 h-16 text-gray-700 mx-auto mb-6"/>
+                                <ShoppingCart className="w-16 h-16 text-gray-700 mx-auto mb-6" />
                                 <h3 className="text-white text-2xl font-bold mb-4">Your cart is empty</h3>
                                 <Link href="/games" className="btn-primary-glow py-4 px-12 rounded-xl text-sm inline-flex items-center gap-2 font-gaming uppercase tracking-widest max-w-[300] justify-center mb-4">
                                     Browse Games
@@ -111,10 +118,17 @@ const CartPage = () => {
 
                             <button
                                 onClick={handleCheckout}
-                                disabled={cart.length === 0}
-                                className="btn-primary-glow py-4 px-12 rounded-xl text-sm inline-flex items-center gap-2 font-gaming uppercase tracking-widest w-full justify-center mb-4"
+                                disabled={cart.length === 0 || isSubmitting}
+                                className="btn-primary-glow py-4 px-12 rounded-xl flex items-center w-full justify-center mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                CHECKOUT NOW
+                                {isSubmitting ? (
+                                    <div className="flex items-center gap-3">
+                                        <Loader2 className="w-5 h-5 animate-spin text-black" />
+                                        <span className="font-gaming uppercase tracking-widest text-sm text-black">Processing...</span>
+                                    </div>
+                                ) : (
+                                    <span className="font-gaming uppercase tracking-widest text-sm text-black">CHECKOUT NOW</span>
+                                )}
                             </button>
 
                             <p className="text-[10px] text-gray-500 text-center uppercase font-bold tracking-widest">
@@ -125,17 +139,6 @@ const CartPage = () => {
                 </div>
             </div>
 
-            {/* Success Toast */}
-            {showToast && (
-                <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-200 animate-slide-in-up">
-                    <div className="bg-primary text-black px-8 py-4 rounded-xl shadow-2xl flex items-center gap-4 border-4 border-black font-black uppercase tracking-widest text-sm">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>Order Placed Successfully!</span>
-                    </div>
-                </div>
-            )}
 
             <Footer />
         </main>

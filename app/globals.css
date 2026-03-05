@@ -24,7 +24,7 @@
   /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
-  --error: #ef4444;
+  --error: #fa1313;
   --info: #3b82f6;
 }
 
@@ -369,24 +369,99 @@ a:focus {
   animation: logo-glow 3s ease-in-out infinite;
 }
 
-.nav-item-animate-1 {
-  animation: nav-item-fade-in 0.5s ease-out 0.3s forwards;
-  opacity: 0;
+/* --- Optimized Navbar Animations --- */
+
+/* --- Optimized Navbar Animations --- */
+
+/* Base styles for the nav items */
+.nav-item-animate {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-orbitron), sans-serif;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  position: relative;
+  display: inline-block;
+  padding: 4px 0;
+  /* Final state of the entry animation */
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
 }
 
-.nav-item-animate-2 {
-  animation: nav-item-fade-in 0.5s ease-out 0.4s forwards;
-  opacity: 0;
+/* Staggered Entry Animation (Applied via individual classes) */
+.nav-anim-1 {
+  animation: navEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both;
 }
 
-.nav-item-animate-3 {
-  animation: nav-item-fade-in 0.5s ease-out 0.5s forwards;
-  opacity: 0;
+.nav-anim-2 {
+  animation: navEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both;
 }
 
-.nav-item-animate-4 {
-  animation: nav-item-fade-in 0.5s ease-out 0.6s forwards;
-  opacity: 0;
+.nav-anim-3 {
+  animation: navEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s both;
+}
+
+.nav-anim-4 {
+  animation: navEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s both;
+}
+
+@keyframes navEntry {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Hover State - Glitch Effect */
+.nav-item-glitch {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  display: inline-block;
+}
+
+.nav-item-animate:hover .nav-item-glitch {
+  color: var(--primary);
+  text-shadow:
+    2px 0 rgba(0, 255, 166, 0.5),
+    -2px 0 rgba(255, 0, 229, 0.5);
+  animation: glitch-premium 0.3s linear infinite;
+}
+
+/* Premium Glitch Animation */
+@keyframes glitch-premium {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-1.5px, 1.5px);
+  }
+
+  40% {
+    transform: translate(-1.5px, -1.5px);
+  }
+
+  60% {
+    transform: translate(1.5px, 1.5px);
+  }
+
+  80% {
+    transform: translate(1.5px, -1.5px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 
 /* Utility Classes */
@@ -796,6 +871,47 @@ a:focus {
 }
 
 .btn-primary-glow:after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.4) 0%,
+      transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.btn-primary-glow:hover:after {
+  opacity: 1;
+}
+
+/*logout button */
+.btn-logout-glow {
+  background: var(--error);
+  color: black;
+  border-radius: 8px;
+  border: none;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px var(--error-dark);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-orbitron), sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.btn-logout-glow:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 0 30px var(--error);
+}
+
+.btn-logout-glow:after {
   content: "";
   position: absolute;
   top: -50%;

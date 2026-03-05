@@ -192,6 +192,7 @@ const GameSlider: React.FC = () => {
           fill
           className="slide-image object-cover"
           priority
+          unoptimized={true}
           sizes="100vw"
         />
         <div className="slide-overlay absolute inset-0" />
@@ -216,6 +217,7 @@ const GameSlider: React.FC = () => {
               transition: `transform ${TRANSITION_MS}ms ${EXPO_EASING}`,
             }}
             priority
+            unoptimized={true}
             sizes="100vw"
           />
           <div

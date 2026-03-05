@@ -4,7 +4,13 @@ const nextConfig: NextConfig = {
   // Images optimization
   images: {
     formats: ['image/webp', 'image/avif'],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
       {
         protocol: 'https',
         hostname: '**',
