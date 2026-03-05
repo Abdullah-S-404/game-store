@@ -84,10 +84,10 @@ const ContactPage: React.FC = () => {
 
     return (
         <main className="min-h-screen bg-surface overflow-x-hidden">
+
             <Navbar />
             <div className="h-[12vh] w-full" />
 
-            {/* ─── Hero ─── */}
             <section className="relative py-28 px-8 text-center overflow-hidden">
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-gaming-purple/8 blur-[140px] rounded-full" />
@@ -107,7 +107,6 @@ const ContactPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── Contact Info Cards ─── */}
             <section className="py-8 px-8">
                 <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-5">
                     {contactInfo.map((item) => {
@@ -126,11 +125,9 @@ const ContactPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── Form + FAQ ─── */}
             <section className="py-20 px-8">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-                    {/* Contact Form */}
                     <div>
                         <h2 className="text-white text-3xl font-gaming uppercase tracking-tight mb-2">Send a Message</h2>
                         <p className="text-gray-500 font-gaming text-sm tracking-wider mb-8">Fill in the details below and we&apos;ll get back to you ASAP.</p>
@@ -199,7 +196,6 @@ const ContactPage: React.FC = () => {
                         )}
                     </div>
 
-                    {/* FAQ */}
                     <div>
                         <h2 className="text-white text-3xl font-gaming uppercase tracking-tight mb-2">Common Questions</h2>
                         <p className="text-gray-500 font-gaming text-sm tracking-wider mb-8">Quick answers to what gamers ask most.</p>
@@ -229,7 +225,6 @@ const ContactPage: React.FC = () => {
                             ))}
                         </div>
 
-                        {/* Live chat nudge */}
                         <div className="mt-8 glass-effect rounded-2xl p-6 border border-primary/20 flex items-start gap-4">
                             <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
                                 <MessageSquare className="w-5 h-5 text-primary" />

@@ -36,7 +36,6 @@ function getThumbClipPath(thumbIdx: number): string {
 
 const CLIP_FULL = 'inset(0% 0% 0% 0% round 0px)';
 
-// ─── Slide Content ────────────────────────────────────────────────────────────
 interface SlideContentProps {
   game: Game;
   style?: React.CSSProperties;
@@ -90,7 +89,6 @@ function SlideContent({ game, style }: SlideContentProps) {
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────────────────────
 const VISIBLE_THUMBS = 4;
 
 const GameSlider: React.FC = () => {
@@ -103,12 +101,10 @@ const GameSlider: React.FC = () => {
   const isTransitioningRef = useRef(false);
   const currentIndexRef = useRef(currentIndex);
 
-  // Keep ref in sync with state for keyboard handler
   useEffect(() => {
     currentIndexRef.current = currentIndex;
   }, [currentIndex]);
 
-  // Calculate visible thumbnails window - FIXED LIST approach
   const getVisibleThumbs = useCallback(() => {
     const thumbs = [];
     for (let i = 0; i < VISIBLE_THUMBS; i++) {
@@ -127,7 +123,6 @@ const GameSlider: React.FC = () => {
     setNextIndex(target);
     setThumbOrigin(slotIdx);
 
-    // Smooth text reveal delay
     setTimeout(() => {
       setDisplayIndex(target);
     }, 120);
@@ -150,7 +145,6 @@ const GameSlider: React.FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Only handle if not in an input field
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
       }
@@ -172,7 +166,6 @@ const GameSlider: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Auto-play: move to next
       const nextIdx = (currentIndex + 1) % games.length;
       startSlide(nextIdx, 0);
     }, 6000);

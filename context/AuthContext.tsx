@@ -25,14 +25,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Initial load
     useEffect(() => {
         const savedUser = sessionStorage.getItem('game_store_user');
         if (savedUser) {
             try {
                 let parsedUser = JSON.parse(savedUser);
 
-                // Auto-generate avatar if missing (for legacy sessions or old style)
                 if (!parsedUser.avatar || parsedUser.avatar.includes('avataaars')) {
                     parsedUser.avatar = `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(parsedUser.name)}&backgroundColor=00ffa6,00d1ff,ff00e5,ffae00,7000ff&backgroundType=solid,gradientLinear&chars=1`;
                     sessionStorage.setItem('game_store_user', JSON.stringify(parsedUser));
@@ -46,7 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(false);
     }, []);
 
-    // Reactive order loading when user ID changes
     useEffect(() => {
         if (user) {
             loadUserOrders(user.id);
@@ -56,18 +53,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [user?.id]);
 
     const loadUserOrders = (userId: string) => {
-        setOrders([]); // Immediate clear to prevent leakage during load
-        // 1. Get from static mock if matching
+        setOrders([]);
         const staticOrders = mockOrders.filter(o => o.userId === userId);
 
-        // 2. Get from localStorage
         const storedOrdersRaw = localStorage.getItem(`game_store_orders_${userId}`);
         const storedOrders = storedOrdersRaw ? JSON.parse(storedOrdersRaw) : [];
 
-        // Combine (prefer stored for dynamic updates)
         const allOrders = [...staticOrders, ...storedOrders];
 
-        // 3. Seed "Welcome" games if absolutely empty
         if (allOrders.length === 0) {
             const welcomeOrder: Order = {
                 id: `WELCOME-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
@@ -91,12 +84,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const login = async (email: string, pass: string): Promise<boolean> => {
         let foundUser: User | null = null;
 
-        // 1. Check predefined mock users
         const staticUser = mockUsers.find((u) => u.email === email);
         if (staticUser && pass === 'password123') { // Hardcoded for pre-defined mocks
             foundUser = staticUser;
         } else {
-            // 2. Check registered users in local storage
             const storedUsersRaw = localStorage.getItem('game_store_registered_users');
             if (storedUsersRaw) {
                 const registeredUsers = JSON.parse(storedUsersRaw);
@@ -140,7 +131,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         registeredUsers.push(newUser);
         localStorage.setItem('game_store_registered_users', JSON.stringify(registeredUsers));
 
-        // No longer auto-login to ensure user manages their first session
         return true;
     };
 
@@ -162,7 +152,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         localStorage.setItem(`game_store_orders_${user.id}`, JSON.stringify(updatedOrders));
 
-        // Refresh local state (including static ones)
         loadUserOrders(user.id);
         return true;
     };
@@ -177,11 +166,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             avatar: `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=00ffa6,00d1ff,ff00e5,ffae00,7000ff&backgroundType=solid,gradientLinear&chars=1`
         };
 
-        // Update session
         setUser(updatedUser);
         sessionStorage.setItem('game_store_user', JSON.stringify(updatedUser));
 
-        // Update persistent mock storage for registered users
         const storedUsersRaw = localStorage.getItem('game_store_registered_users');
         if (storedUsersRaw) {
             const registeredUsers = JSON.parse(storedUsersRaw);
@@ -194,7 +181,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     avatar: updatedUser.avatar
                 };
 
-                // Only update password if provided
                 if (password) {
                     updatedPersistedUser.password = password;
                 }
@@ -217,7 +203,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             localStorage.setItem('game_store_registered_users', JSON.stringify(filteredUsers));
         }
 
-        // Clean up user specific data
         localStorage.removeItem(`game_store_orders_${user.id}`);
         logout();
         return true;
@@ -227,8 +212,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(null);
         setOrders([]);
         sessionStorage.removeItem('game_store_user');
-        // Force reload to clear any remaining in-memory states if necessary, 
-        // but setOrders([]) should be enough for our current architecture.
     };
 
     const isAuthenticated = !!user;

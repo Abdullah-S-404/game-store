@@ -74,13 +74,11 @@ const Navbar: React.FC = () => {
                 : 'bg-transparent pt-4 px-4 mx-auto'
                 }`}>
                 <div className="w-full max-w-[1920px] mx-auto px-2 sm:px-12 md:px-16 lg:px-24 flex items-center justify-between">
-                    {/* Logo */}
                     <span className="text-primary md:gap-2 text-xl md:text-3xl font-gaming font-black tracking-tighter hover:scale-105 transition-transform group flex items-center animate-logo-glow">
                         <Gamepad2 className='p-2 rounded-lg transition-colors w-10 h-10 text-primary' />
                         GAMESTORE
                     </span>
 
-                    {/* Desktop Links */}
                     <div className="hidden gap-2 md:flex items-center space-x-6">
                         <Link href="/" className="font-gaming text-xs! tracking-[0.2em] nav-item-animate nav-anim-1">
                             <span className="nav-item-glitch">Home</span>
@@ -96,7 +94,6 @@ const Navbar: React.FC = () => {
                         </Link>
                     </div>
 
-                    {/* Search & Actions */}
                     <div className="flex  gap-6 items-center">
                         <div className="hidden md:flex gap-2 items-center">
                             <button
@@ -116,7 +113,6 @@ const Navbar: React.FC = () => {
                             </Link>
                         </div>
 
-                        {/* Auth / User */}
                         {isAuthenticated ? (
                             <div className="flex gap-4 items-center">
                                 <Link href="/profile" className="flex items-center justify-center">
@@ -175,7 +171,6 @@ const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            {/* Search Modal */}
             <div className={`fixed h-screen w-screen top-0 left-0 right-0 z-50 shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-all duration-300 ${isSearchOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <div className="absolute inset-0 bg-transparent " onClick={toggleSearch} />
                 <div className="relative flex items-start justify-center pt-20 pointer-events-none">
@@ -199,7 +194,6 @@ const Navbar: React.FC = () => {
                             </div>
                         </form>
 
-                        {/* Search Results */}
                         {showResults && filteredGames.length > 0 && (
                             <div className="absolute top-full left-0 right-0 mt-2 glass-effect border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl">
                                 <div className="max-h-96 overflow-y-auto">

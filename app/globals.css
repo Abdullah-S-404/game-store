@@ -2,26 +2,22 @@
 
 /* Game Store Custom CSS Variables */
 :root {
-  /* Brand Colors */
   --primary: #00ff88;
   --primary-dark: #00cc6a;
   --secondary: #ff6b35;
   --accent: #4ecdc4;
 
-  /* Gaming Theme Colors */
   --gaming-purple: #8b5cf6;
   --gaming-pink: #ec4899;
   --gaming-blue: #3b82f6;
   --gaming-green: #10b981;
 
-  /* Neutral Colors */
   --background: #0f0f23;
   --surface: #1a1a2e;
   --surface-light: #252542;
   --foreground: #ffffff;
   --foreground-muted: #a0a0a0;
 
-  /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
   --error: #fa1313;
@@ -29,32 +25,27 @@
 }
 
 @theme {
-  /* Color Theme */
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-surface-light: var(--surface-light);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
 
-  /* Brand Colors */
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
 
-  /* Gaming Colors */
   --color-gaming-purple: var(--gaming-purple);
   --color-gaming-pink: var(--gaming-pink);
   --color-gaming-blue: var(--gaming-blue);
   --color-gaming-green: var(--gaming-green);
 
-  /* Status Colors */
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-info: var(--info);
 
-  /* Typography */
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Courier New", monospace;
   --font-gaming: "Orbitron", "Rajdhani", sans-serif;

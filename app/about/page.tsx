@@ -109,9 +109,7 @@ const AboutPage: React.FC = () => {
             <Navbar />
             <div className="h-[12vh] w-full" />
 
-            {/* ─── Hero ─── */}
             <section className="relative py-28 px-8 text-center overflow-hidden">
-                {/* BG blobs */}
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[140px] rounded-full" />
                     <div className="absolute bottom-0 right-0 w-96 h-96 bg-gaming-purple/10 blur-[120px] rounded-full" />
@@ -140,7 +138,6 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── Stats ─── */}
             <section className="py-16 px-8">
                 <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6">
                     {stats.map((stat) => (
@@ -149,7 +146,6 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── Mission ─── */}
             <section className="py-24 px-8">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
@@ -166,7 +162,6 @@ const AboutPage: React.FC = () => {
                             the most comprehensive catalog of digital games, with instant delivery and unbeatable support.
                         </p>
                     </div>
-                    {/* Visual */}
                     <div className="relative">
                         <div className="glass-effect rounded-3xl p-8 border border-white/10 relative overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-gaming-purple/5 pointer-events-none" />
@@ -192,7 +187,6 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── Values ─── */}
             <section className="py-24 px-8 bg-[#12122a]">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
@@ -219,7 +213,6 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── Team ─── */}
             <section className="py-24 px-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
@@ -243,7 +236,6 @@ const AboutPage: React.FC = () => {
                 </div>
             </section>
 
-            {/* ─── CTA ─── */}
             <section className="py-20 px-8">
                 <div className="max-w-4xl mx-auto glass-effect rounded-3xl p-12 border border-white/10 text-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-gaming-purple/5 pointer-events-none" />

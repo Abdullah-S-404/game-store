@@ -31,14 +31,12 @@ const ProfilePage = () => {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<TabType>('overview');
 
-    // Settings form state
     const [newName, setNewName] = useState(user?.name || '');
     const [newEmail, setNewEmail] = useState(user?.email || '');
     const [newPassword, setNewPassword] = useState('');
     const [updateStatus, setUpdateStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    // Sync form with user data when it changes (session transition)
     useEffect(() => {
         if (user) {
             setNewName(user.name);
@@ -85,7 +83,6 @@ const ProfilePage = () => {
         <main className="min-h-screen bg-surface flex flex-col">
             <Navbar />
 
-            {/* Profile Header / Banner */}
             <div className="relative h-64 w-full bg-gradient-to-b from-surface via-surface-light to-surface">
                 <div className="absolute inset-0 opacity-20">
                     <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,var(--primary)_0%,transparent_70%)] opacity-30 blur-3xl animate-pulse" />
@@ -122,7 +119,6 @@ const ProfilePage = () => {
             <div className="max-w-7xl mx-auto px-6 w-full -mt-6 pb-24 relative z-20 mt-10">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-                    {/* Navigation Sidebar */}
                     <div className="lg:col-span-1">
                         <div className="bg-surface/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sticky top-32 space-y-2">
                             <button
@@ -162,13 +158,11 @@ const ProfilePage = () => {
                         </div>
                     </div>
 
-                    {/* Main Content Area */}
                     <div className="lg:col-span-3 min-h-[500px]">
 
                         {/* TAB: OVERVIEW */}
                         {activeTab === 'overview' && (
                             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                {/* Recently Acquired Section */}
                                 <div className="bg-surface-light/30 border border-white/10 rounded-2xl overflow-hidden">
                                     <div className="px-6 py-4 border-b border-white/10 flex justify-between items-center">
                                         <h4 className="text-white font-gaming uppercase tracking-widest text-sm">Recently Acquired</h4>
@@ -179,7 +173,6 @@ const ProfilePage = () => {
                                     </div>
                                     <div className="flex flex-col p-4 space-y-4">
                                         {(() => {
-                                            // Flatten all items from all orders and sort by date
                                             const allGames = userOrders
                                                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                                                 .flatMap(order => order.items.map(item => {
@@ -192,7 +185,6 @@ const ProfilePage = () => {
                                                     };
                                                 }));
 
-                                            // Deduplicate by game title (in case of multiple purchases or different editions)
                                             const uniqueGames = Array.from(new Map(allGames.map(game => [game.title, game])).values());
 
                                             return uniqueGames.length > 0 ? (
@@ -247,7 +239,6 @@ const ProfilePage = () => {
                             </div>
                         )}
 
-                        {/* TAB: ORDERS */}
                         {activeTab === 'orders' && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <h4 className="text-white font-gaming uppercase tracking-[0.15em] text-lg pl-2 mb-6">Order History</h4>
@@ -309,7 +300,6 @@ const ProfilePage = () => {
                             </div>
                         )}
 
-                        {/* TAB: SETTINGS */}
                         {activeTab === 'settings' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="bg-surface-light/30 border border-white/10 rounded-2xl p-8 max-w-2xl">
@@ -406,7 +396,6 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
-                {/* Custom Confirmation Modal */}
                 <ConfirmModal
                     isOpen={showDeleteModal}
                     onClose={() => setShowDeleteModal(false)}

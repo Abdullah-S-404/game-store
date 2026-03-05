@@ -50,7 +50,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [close]);
 
-    // Keyboard navigation
     useEffect(() => {
         if (!isOpen) return;
         const handleKey = (e: KeyboardEvent) => {
@@ -72,7 +71,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         return () => document.removeEventListener('keydown', handleKey);
     }, [isOpen, highlightedIndex, options, onChange, close]);
 
-    // Scroll highlighted item into view
     useEffect(() => {
         if (highlightedIndex < 0 || !listRef.current) return;
         const item = listRef.current.children[highlightedIndex] as HTMLElement;
@@ -97,7 +95,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 </span>
             )}
 
-            {/* Trigger */}
             <button
                 id={id}
                 type="button"
@@ -131,7 +128,6 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                         animation: 'dropdownFadeIn 0.2s cubic-bezier(0.16,1,0.3,1) forwards',
                     }}
                 >
-                    {/* Top accent line */}
                     <div className="h-[2px] w-full" style={{ background: 'linear-gradient(90deg, transparent, #00ff88, transparent)' }} />
 
                     <div
